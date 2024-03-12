@@ -33,11 +33,24 @@ public class CustomerServiceTest {
     }
 
     @Test
+    public void registerTest2(){
+        CustomerRegisterRequest registerRequest = new CustomerRegisterRequest();
+
+        registerRequest.setEmail("ender@gmail.com");
+        registerRequest.setPassword("password123");
+
+        CustomerRegisterResponse response =
+                customerService.register(registerRequest);
+
+        assertNotNull(response);
+        assertNotNull(response.getId());
+    }
+
+    @Test
     public void updateCustomerTest() throws CustomerNotFoundException {
         UpdateCustomerRequest customerRequest = new UpdateCustomerRequest();
-//        customerRequest.setEmail("test@gmail.com");
-        customerRequest.setPhoneNumber("09083456");
-        customerRequest.setAddress("312, Herbert Macaulay way, Sabo");
+        customerRequest.setEmail("joy@gmail.com");
+        customerRequest.setAddress("313, Herbert Macaulay way, Sabo");
 
         ApiResponse<UpdateCustomerResponse> response = customerService.updateCustomer(1L, customerRequest);
 
