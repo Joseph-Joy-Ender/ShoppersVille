@@ -4,7 +4,6 @@ import africa.semicolon.shoppersDelight.dtos.request.AddProductRequest;
 import africa.semicolon.shoppersDelight.dtos.response.AddProductResponse;
 import africa.semicolon.shoppersDelight.dtos.response.ProductResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.processing.SQL;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
