@@ -6,6 +6,7 @@ import africa.semicolon.shoppersDelight.dtos.request.CustomerRegisterRequest;
 import africa.semicolon.shoppersDelight.dtos.request.UpdateCustomerRequest;
 import africa.semicolon.shoppersDelight.dtos.response.ApiResponse;
 import africa.semicolon.shoppersDelight.dtos.response.CustomerRegisterResponse;
+import africa.semicolon.shoppersDelight.dtos.response.CustomerResponse;
 import africa.semicolon.shoppersDelight.dtos.response.UpdateCustomerResponse;
 import africa.semicolon.shoppersDelight.exceptions.CustomerNotFoundException;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
@@ -16,6 +17,7 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchOperation;
 import com.github.fge.jsonpatch.ReplaceOperation;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -29,6 +31,8 @@ import static java.util.Arrays.stream;
 public class ShoppersCustomerService implements CustomerService{
 
     private final CustomerRepository customerRepository;
+
+    private final ModelMapper mapper = new ModelMapper();
     @Override
     public CustomerRegisterResponse register(CustomerRegisterRequest registerRequest) {
         Customer customer = new Customer();
@@ -53,6 +57,11 @@ public class ShoppersCustomerService implements CustomerService{
         return new ApiResponse<>(buildUpdateCustomerResponse());
 
 
+    }
+
+    @Override
+    public CustomerResponse getCustomerBy(Long id) throws CustomerNotFoundException {
+        return mapper.map(findCustomerBy(id), CustomerResponse.class);
     }
 
     private static UpdateCustomerResponse buildUpdateCustomerResponse(){
