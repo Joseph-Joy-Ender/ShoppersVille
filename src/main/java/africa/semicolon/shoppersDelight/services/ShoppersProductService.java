@@ -25,7 +25,6 @@ public class ShoppersProductService implements ProductService{
 
     @Override
     public AddProductResponse addProduct(AddProductRequest request) {
-        ModelMapper mapper = new ModelMapper();
         Product product = mapper.map(request, Product.class);
         Product savedProduct = productRepository.save(product);
 

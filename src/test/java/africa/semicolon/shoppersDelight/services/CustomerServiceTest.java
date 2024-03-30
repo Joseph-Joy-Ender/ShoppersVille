@@ -1,5 +1,7 @@
 package africa.semicolon.shoppersDelight.services;
 
+import africa.semicolon.shoppersDelight.data.models.Customer;
+import africa.semicolon.shoppersDelight.data.repositories.CustomerRepository;
 import africa.semicolon.shoppersDelight.dtos.request.CustomerRegisterRequest;
 import africa.semicolon.shoppersDelight.dtos.request.UpdateCustomerRequest;
 import africa.semicolon.shoppersDelight.dtos.response.ApiResponse;
@@ -20,6 +22,9 @@ public class CustomerServiceTest {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private CustomerRepository customerRepository;
     @Test
     public void registerTest(){
         CustomerRegisterRequest registerRequest = new CustomerRegisterRequest();
@@ -67,5 +72,16 @@ public class CustomerServiceTest {
 
         assertThat(response).isNotNull();
         assertThat(response.getData().getMessage()).isNotNull();
+    }
+
+    @Test
+    public void testThatRegisteredCustomerHasACart(){
+        CustomerRegisterRequest request = new CustomerRegisterRequest();
+        request.setEmail("joy@gmail.com");
+        request.setPassword("joy1234");
+        CustomerRegisterResponse response = customerService.register(request);
+        assertNotNull(response);
+        Customer customer = customerRepository.findById(response.getId()).get();
+        assertNotNull(customer.getCart());
     }
 }
